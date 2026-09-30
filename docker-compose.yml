@@ -1,0 +1,14 @@
+# Docker Compose v2 (`docker compose up --build`).
+services:
+  lighting-timeline:
+    build: .
+    image: lighting-timeline:latest
+    container_name: lighting-timeline
+    ports:
+      - "8000:8000"
+    volumes:
+      - lighting-data:/data
+    restart: unless-stopped
+
+volumes:
+  lighting-data:

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>灯光渐变时间轴</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🎛 灯光渐变时间轴</div>
+  <div class="project">
+    <label>工程
+      <input id="project-name" type="text" maxlength="100" spellcheck="false">
+    </label>
+    <span id="save-state" class="save-state"></span>
+  </div>
+  <div class="actions">
+    <button id="add-cue" type="button">＋ 新增提示项</button>
+    <button id="validate-btn" type="button">校验</button>
+    <button id="save-btn" type="button" class="primary">保存工程</button>
+  </div>
+</header>
+
+<section class="transport">
+  <button id="play-btn" type="button" class="play">▶ 播放</button>
+  <button id="pause-btn" type="button">⏸ 暂停</button>
+  <button id="stop-btn" type="button">⏹ 归零</button>
+  <label class="time-input">时间(ms)
+    <input id="seek-input" type="number" min="0" step="1" value="0">
+  </label>
+  <button id="seek-btn" type="button">跳转</button>
+  <div class="zoom">
+    <button id="zoom-out" type="button">−</button>
+    <span id="zoom-label"></span>
+    <button id="zoom-in" type="button">＋</button>
+    <button id="zoom-fit" type="button">适应</button>
+  </div>
+  <div id="live-time" class="live-time">0 ms</div>
+</section>
+
+<div id="error-banner" class="banner hidden"></div>
+<div id="ok-banner" class="banner ok hidden"></div>
+
+<main class="layout">
+  <section class="timeline-panel">
+    <div class="legend">
+      <span><i class="sw ramp"></i>线性渐变</span>
+      <span><i class="sw instant"></i>零时长立即切换</span>
+      <span><i class="sw cut"></i>被打断的渐变</span>
+      <span><i class="sw ref"></i>引用链（点选某项高亮）</span>
+      <span class="hint">在时间轴上按住拖动可移动播放头</span>
+    </div>
+    <div id="timeline-scroll" class="timeline-scroll">
+      <div id="timeline-inner" class="timeline-inner">
+        <svg id="timeline-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="side">
+    <h2>通道读数 <small>四舍五入，0.5 向上</small></h2>
+    <div id="readouts" class="readouts"></div>
+    <h2>提示项</h2>
+    <div class="table-wrap">
+      <table id="cue-table">
+        <thead>
+          <tr>
+            <th>#</th><th>灯具</th><th>通道</th><th>目标<br>0–255</th>
+            <th>渐变ms</th>
+            <th>起点</th><th>绝对ms</th>
+            <th>引用项</th><th>锚点</th><th>偏移ms</th>
+            <th>实际起步</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="cue-rows"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="/app.js"></script>
+</body>
+</html>
